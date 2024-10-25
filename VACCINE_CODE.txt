@@ -1,0 +1,237 @@
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct mynode {
+    char name[20];
+    char gen[6];
+    char idtype[40];
+    char id[20];
+    char mob[20];
+    char comor[3];
+    struct mynode* link;
+} Node;
+Node* start = NULL;
+
+int n;
+char state[20], dis[20], hos[40], date[12], hour[6], vac[20], dos[10];
+void heading();
+void details();
+void venue();
+void receipt();
+void addnode(char a[20], char b[6], char c[40], char d[20], char e[20], char f[3]);
+
+void main()
+{
+    details();
+    venue();
+    receipt();
+}
+
+void details()
+{
+    int i;
+    char a[20], b[6], c[40], d[20], e[20], f[3];
+
+    heading();
+    printf("\t\t\t\tEnter Candidate Number (Max 4 People): ");
+    scanf("%d", &n);
+
+    for (i = 1; i <= n; i++) 
+    {
+        system("cls");
+        heading();
+        printf("\t\t\t\tEnter The %dth Candidate Name: ", i);
+        getchar(); // To clear newline character from input buffer
+        fgets(a, sizeof(a), stdin);
+        a[strcspn(a, "\n")] = 0;
+
+        printf("\t\t\t\tEnter The %dth Candidate Gender: ", i);
+        fgets(b, sizeof(b), stdin);
+        b[strcspn(b, "\n")] = 0;
+
+        printf("\t\t\t\tEnter The %dth Candidate Id-Type: ", i);
+        fgets(c, sizeof(c), stdin);
+        c[strcspn(c, "\n")] = 0;
+
+        printf("\t\t\t\tEnter The %dth Candidate Id-Number: ", i);
+        fgets(d, sizeof(d), stdin);
+        d[strcspn(d, "\n")] = 0;
+
+        printf("\t\t\t\tEnter The %dth Candidate Mobile Number: ", i);
+        fgets(e, sizeof(e), stdin);
+        e[strcspn(e, "\n")] = 0;
+
+        printf("\t\t\t\tEnter The %dth Candidate Co-Morbidity Status (Yes or No): ", i);
+        fgets(f, sizeof(f), stdin);
+        f[strcspn(f, "\n")] = 0;
+
+        // Calling Function addnode()
+        addnode(a, b, c, d, e, f);
+    }
+}
+
+void addnode(char a[20], char b[6], char c[40], char d[20], char e[20], char f[3])
+{
+    Node *newptr = NULL, *ptr;
+    newptr = (Node*)malloc(sizeof(Node));
+    if (newptr == NULL) {
+        printf("Memory allocation failed\n");
+        exit(1);
+    }
+    strcpy(newptr->name, a);
+    strcpy(newptr->gen, b);
+    strcpy(newptr->idtype, c);
+    strcpy(newptr->id, d);
+    strcpy(newptr->mob, e);
+    strcpy(newptr->comor, f);
+    newptr->link = NULL;
+    if (start == NULL)
+        start = newptr;
+    else {
+        ptr = start;
+        while (ptr->link != NULL)
+            ptr = ptr->link;
+        ptr->link = newptr;
+    }
+}
+
+void venue()
+{
+    int i, x;
+
+    system("cls");
+    heading();
+    printf("\t\t\t\tEnter State: ");
+    getchar(); // Clear buffer
+    fgets(state, sizeof(state), stdin);
+    state[strcspn(state, "\n")] = 0;
+
+    printf("\t\t\t\tEnter District: ");
+    fgets(dis, sizeof(dis), stdin);
+    dis[strcspn(dis, "\n")] = 0;
+
+    printf("\t\t\t\tEnter Date (DD-MM-YY): ");
+    fgets(date, sizeof(date), stdin);
+    date[strcspn(date, "\n")] = 0;
+
+    printf("\t\t\t\tEnter Time (24 Hours): ");
+    fgets(hour, sizeof(hour), stdin);
+    hour[strcspn(hour, "\n")] = 0;
+
+    system("cls");
+    heading();
+    printf("\t\t\t\t1. GFG Hospital\n");
+    printf("\t\t\t\t2. Zilla Hospital\n");
+    printf("\t\t\t\t3. DS Hospital\n");
+    x = 1;
+    while (x) {
+        printf("\t\t\t\tEnter Choice: ");
+        scanf("%d", &i);
+        if (i == 1) {
+            strcpy(hos, "GFG Hospital");
+            x = 0;
+        } else if (i == 2) {
+            strcpy(hos, "Zilla Hospital");
+            x = 0;
+        } else if (i == 3) {
+            strcpy(hos, "DS Hospital");
+            x = 0;
+        } else {
+            printf("Enter Correct Choice...\n");
+        }
+    }
+
+    heading();
+    printf("\t\t\t\t1. 1st Dose\n");
+    printf("\t\t\t\t2. 2nd Dose\n");
+    printf("\t\t\t\t3. 3rd Dose\n");
+    x = 1;
+    while (x) {
+        printf("\t\t\t\tEnter choice: ");
+        scanf("%d", &i);
+        if (i == 1) {
+            strcpy(dos, "1st Dose");
+            x = 0;
+        } else if (i == 2) {
+            strcpy(dos, "2nd Dose");
+            x = 0;
+        } else if (i == 3) {
+            strcpy(dos, "3rd Dose");
+            x = 0;
+        } else {
+            printf("Enter Correct Choice...\n");
+        }
+    }
+
+    heading();
+    printf("\t\t\t\t1. co-vaccine\n");
+    printf("\t\t\t\t2. co-vid shield\n");
+    printf("\t\t\t\t3. Booster Dose\n");
+    x = 1;
+    while (x) {
+        printf("\t\t\t\tEnter choice: ");
+        scanf("%d", &i);
+        if (i == 1) {
+            strcpy(vac, "co-vaccine");
+            x = 0;
+        } else if (i == 2) {
+            strcpy(vac, "co-vid shield");
+            x = 0;
+        } else if (i == 3) {
+            strcpy(vac, "Booster Dose");
+            x = 0;
+        } else {
+            printf("Enter Correct Choice...\n");
+        }
+    }
+}
+
+void receipt()
+{
+    int i;
+    Node* ptr = start;
+
+    system("cls");
+    heading();
+    printf("\n\t\t\t\t*Take Screenshot For Further Use*\n");
+    for (i = 1; i <= n; i++) {
+        printf("\t\t\t\t%dst Candidate Name: ", i);
+        puts(ptr->name);
+        printf("\t\t\t\t%dst Candidate Gender: ", i);
+        puts(ptr->gen);
+        printf("\t\t\t\t%dst Candidate Id-type: ", i);
+        puts(ptr->idtype);
+        printf("\t\t\t\t%dst Candidate Id Number: ", i);
+        puts(ptr->id);
+        printf("\t\t\t\t%dst Candidate Mobile Number: ", i);
+        puts(ptr->mob);
+        printf("\t\t\t\t%dst Candidate Co-Morbidity Status: ", i);
+        puts(ptr->comor);
+        printf("\n");
+        ptr = ptr->link;
+    }
+    printf("\t\t\t\tState: ");
+    puts(state);
+    printf("\t\t\t\tDistrict: ");
+    puts(dis);
+    printf("\t\t\t\tDate: ");
+    puts(date);
+    printf("\t\t\t\tTime: ");
+    puts(hour);
+    printf("\t\t\t\tChosen Hospital: ");
+    puts(hos);
+    printf("\t\t\t\tChosen Dose: ");
+    puts(dos);
+    printf("\t\t\t\tChosen Vaccine: ");
+    puts(vac);
+
+    printf("\n\t\t\t\t*Thank You For Registration*");
+}
+
+void heading()
+{
+    printf("\t\t\t\t**Covid Vaccination Registration**\n");
+    printf("\t\t\t***Take Vaccine At Your Time & Fight Against Corona***\n\n");
+}
